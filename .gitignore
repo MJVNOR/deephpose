@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+pretrained_models/
+third_party/
+data/
+notebooks/

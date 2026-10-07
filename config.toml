@@ -1,0 +1,22 @@
+[camera]
+width = 640
+height = 480
+fps = 30
+emitter = "on"
+warmup = 60
+dt_max_ms = 33.0
+
+[model]
+ckpt = "pretrained_models/11-33-40/model_best_bp2.pth"
+valid_iters = 16
+scale = 1.0
+
+[depth]
+z_min = 0.2
+z_max = 10.0
+
+[live]
+view = "fs"
+zoom = 2.0
+queue_size = 2
+frames = 0
