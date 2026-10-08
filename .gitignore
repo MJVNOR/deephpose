@@ -7,3 +7,8 @@ data/
 notebooks/
 
 3D Models/
+
+# proyecto pose (env separado FoundationPose): solo se versiona pose/pyproject.toml
+pose/vcpkg/
+pose/build_*.log
+pose/FoundationPose/

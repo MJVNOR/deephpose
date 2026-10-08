@@ -30,8 +30,10 @@ def parse_args():
 
 
 def intr_to_dict(i):
+    m = getattr(i, "model", None)
+    name = getattr(m, "name", None) or str(m)  # ponytail: modelo como texto; lectores viejos sin "model" asumen abajo
     return {"width": i.width, "height": i.height, "fx": i.fx, "fy": i.fy,
-            "ppx": i.ppx, "ppy": i.ppy, "coeffs": list(i.coeffs)}
+            "ppx": i.ppx, "ppy": i.ppy, "coeffs": list(i.coeffs), "model": name}
 
 
 def main():

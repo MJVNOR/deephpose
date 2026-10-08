@@ -40,17 +40,18 @@ def main():
     if img0 is None or img1 is None:
         sys.exit(f"error: no se leen {cap}/left.png o right.png")
     infer_disp(model, cfg, img0, img1, a.scale, a.valid_iters)  # calentamiento
-    disp, t_infer, peak = infer_disp(model, cfg, img0, img1, a.scale, a.valid_iters)
+    disp, info = infer_disp(model, cfg, img0, img1, a.scale, a.valid_iters)
 
     np.save(out / "disp.npy", disp)
     (out / "meta.json").write_text(json.dumps({
         "capture": cap.name, "ckpt": a.ckpt, "valid_iters": a.valid_iters,
         "scale": a.scale, "hw": list(disp.shape), "t_load_s": round(t_load, 2),
-        "t_infer_s": round(t_infer, 2), "vram_peak_mib": round(peak, 1),
+        "t_infer_s": info["t_infer_s"], "vram_peak_mib": info["vram_peak_alloc_mib"],
         "amp_finite": bool(np.all(np.isfinite(disp))),
         "disp_valid_pct": round(100 * float(np.mean(disp > 0)), 1),
-    }, indent=2))
-    print(f"OK {out} t_load={t_load:.1f}s t_infer={t_infer:.2f}s vram={peak:.0f}MiB")
+    } | {k: v for k, v in info.items() if k not in ("t_infer_s",)}, indent=2))
+    print(f"OK {out} t_infer={info['t_infer_s']:.2f}s t_total={info['t_total_s']:.2f}s "
+          f"vram_alloc={info['vram_alloc_mib']:.0f}MiB reserved={info['vram_reserved_mib']:.0f}MiB")
 
 
 if __name__ == "__main__":

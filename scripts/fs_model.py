@@ -39,19 +39,43 @@ def to_3ch(img, scale):
 
 
 def infer_disp(model, cfg, img0, img1, scale=1.0, valid_iters=16):
-    """img*: HxWx3 uint8. Devuelve (disp HxW f32, t_infer_s, vram_peak_mib)."""
+    """img*: HxW uint8 (mono o 3ch). Devuelve (disp HxW f32, info dict).
+
+    info: t_h2d_s (numpy->cuda+pad), t_infer_s (solo modelo, CUDA events),
+    t_d2h_s (unpad+cuda->cpu+numpy), t_total_s (pared con sync),
+    vram_alloc_mib (tensores ahora), vram_reserved_mib (pool ahora),
+    vram_peak_alloc_mib (pico desde reset: pesos residentes + activaciones),
+    vram_peak_reserved_mib (pico reservado: lo anterior + caché del allocator,
+    no memoria de otros procesos).
+    """
+    t_all = time.perf_counter()
     img0, img1 = to_3ch(img0, scale), to_3ch(img1, scale)
     H, W = img0.shape[:2]
-    t = lambda im: torch.as_tensor(im).cuda().float()[None].permute(0, 3, 1, 2)
-    padder = InputPadder(t(img0).shape, divis_by=32, force_square=False)
-    a, b = padder.pad(t(img0), t(img1))
+    mk = lambda im: torch.as_tensor(im).cuda().float()[None].permute(0, 3, 1, 2)
+    t0 = time.perf_counter()
+    padder = InputPadder(mk(img0).shape, divis_by=32, force_square=False)
+    a, b = padder.pad(mk(img0), mk(img1))
+    torch.cuda.synchronize()
+    t_h2d = time.perf_counter() - t0
     torch.cuda.reset_peak_memory_stats()
+    ev0, ev1 = torch.cuda.Event(enable_timing=True), torch.cuda.Event(enable_timing=True)
     with torch.no_grad(), torch.amp.autocast("cuda", enabled=bool(cfg.get("mixed_precision", True))):
-        t1 = time.perf_counter()
+        ev0.record()
         disp = model(a, b, iters=valid_iters, test_mode=True)
-    dt = time.perf_counter() - t1
-    peak = torch.cuda.max_memory_allocated() / 2**20
+        ev1.record()
+    ev1.synchronize()  # ponytail: sin sync el tiempo GPU infra-mide
+    t_infer = ev0.elapsed_time(ev1) / 1e3
+    peak_alloc = torch.cuda.max_memory_allocated() / 2**20
+    peak_res = torch.cuda.max_memory_reserved() / 2**20
+    t2 = time.perf_counter()
     d = padder.unpad(disp.float()).data.cpu().numpy().reshape(H, W)
+    t_d2h = time.perf_counter() - t2
+    info = {"t_h2d_s": round(t_h2d, 3), "t_infer_s": round(t_infer, 3),
+            "t_d2h_s": round(t_d2h, 3), "t_total_s": round(time.perf_counter() - t_all, 3),
+            "vram_alloc_mib": round(torch.cuda.memory_allocated() / 2**20, 1),
+            "vram_reserved_mib": round(torch.cuda.memory_reserved() / 2**20, 1),
+            "vram_peak_alloc_mib": round(peak_alloc, 1),
+            "vram_peak_reserved_mib": round(peak_res, 1)}
     if not np.all(np.isfinite(d)):
         print("aviso: AMP produjo no-finitos", file=sys.stderr)
-    return d, dt, peak
+    return d, info

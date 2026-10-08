@@ -1,84 +1,59 @@
-# deephpose — Plan de trabajo
+# deephpose — Plan pose 6D mouse (FoundationPose + FoundationStereo)
 
-Equipo: Windows 11 nativo, RTX 4070 Laptop 8 GB VRAM, 64 GB RAM, RealSense D415 por USB 3.0, Python 3.11 64-bit, uv. Sin WSL2/Conda/Docker. Editor terminal: vim (no nano).
+Entorno: Windows 11 nativo, Python 3.11, uv, RTX 4070 Laptop 8 GB, RealSense D415. Sin WSL2/Conda/Docker. No reconstruir app: reutilizar `scripts/` actuales.
+Orden: 1 geometría → 2/3 profundidad-GPU → 4 FoundationPose Windows → 5 malla → 6 estática → 7 vivo.
 
-Repo oficial: https://github.com/NVlabs/FoundationStereo
-Checkpoint inicial: ViT-small `11-33-40`.
+## 1. Geometría `scripts/project_to_rgb.py` — hecho
+- [x] Z-buffer min-Z explícito + índice ganador (`splat_to_rgb`: unique sobre píxel lineal, primera aparición en orden asc = mínimo).
+- [x] Rotación `reshape(3,3,order="F")` column-major, verificado vs `rs2_transform_point_to_point` (err col ~1e-7, row ~5-10 mm).
+- [x] Distorsión RGB: `rectify_color` + `model` guardado en `capture.py:intr_to_dict`; salida = RGB rectificado + `K_rect` (`K_rect.json` + `color_rect.png`). Capturas viejas sin `model` → aviso + asunción explícita.
+- [x] `project_ir_to_rgb()` reutilizable estático/vivo. Retorna `Z_rgb (f32, inf), mask_valid, K_rect`.
+- [x] `.npy` intacto; colormap/inpaint solo `overlay.png`. Vacío → `inf`, `0%`, `zmed=sin-puntos`.
+- [x] Tests `tests/test_project.py` (asserts planos, sin pytest): cercano gana; match SDK; escala/geometría + vacío.
+- Verif: `uv run python tests/test_project.py` OK; real `emitter-on` 286166/288996 93.2% zmed 0.86 m, `emitter-off` 285836/289141 93.0% zmed 0.87 m.
 
-Herramientas obligatorias: `obscura` (ver páginas web) y `marimo`, ambos **solo vía sus respectivos MCPs** con `execute` (nada de webfetch/curl para lo que cubra obscura; nada de editar `.py` de notebook en sesión viva, usar `cm`).
+## 2. Profundidad y captura `disparity_to_depth.py + capture.py + live.py` — hecho (pendiente smoke vivo por USB)
+- [x] Fórmula única: `disp_to_depth()` pura + `check_stereo_cal()`; `live.py` la usa (borrada `fxB` `live.py:143`).
+- [x] Validación: IR rectificadas (coeffs≈0), `ppx1≈ppx2` (1px), escala efectiva real `disp/cal` (aviso si ≠ pedida), `z_min/z_max` de `config.toml` (`--z-min/--z-max`), NaN/+inf/`d≤0` → `inf`, baseline inválido aborta.
+- [x] Esquema unificado: `live.py` usa `capture.intr_to_dict` (con `model`) + `depth_intrinsics` + aviso viewpoint; metadata en dicts `timestamps_ms/frame_numbers` + `ts_domain/dt_ms/emitter_actual/warmup` (lectura de capturas viejas intacta: JSON).
+- [x] Vivo: `dt_max_ms` (`--dt-max`, descarta desincronizados), `ts_domain` registrado, `.copy()` antes de cola, `warmup` config (`--warmup`), `started/th/stop` init antes de `try` + `join` + `pipe.stop()` guardado, `OutOfMemoryError` distinguido de `RuntimeError`.
+- [x] Checks `tests/test_depth.py`: no-finitos/rango, abortos calibración, escala efectiva + compat sin `model`.
+- Verif: `test_depth.py` OK, `test_project.py` OK, `project_to_rgb` real idéntico (286166/288996 93.2% 0.86 m), `live.py --help` OK.
+- [x] Smoke `live.py --frames 3` OK tras cable USB 3.2 (`usb_type_descriptor=3.2`): 3 frames, cierre limpio, cámara liberada.
 
-## 0. Inspección y entorno — hecho 2026-10-06
+## 3. GPU `fs_model.py` + color — hecho
+- [x] `infer_disp` con CUDA events + `synchronize`: `t_h2d/t_infer/t_d2h/t_total` separados; picos `alloc` (pesos+activaciones) y `reserved` (+caché allocator, no otros procesos).
+- [x] `infer.py` guarda claves viejas (`t_infer_s`, `vram_peak_mib` → `evaluate.py` intacto) + nuevas; `live.py` usa `info["t_infer_s"]`.
+- [x] `turbo_norm` devuelve BGR directo (antes RGB a `imshow` → colores swapped); `evaluate/project` ya eran consistentes.
+- Verif: `infer` real `t_infer=0.65s t_total=0.66s alloc=255MiB reserved=2104MiB pico_alloc=1603MiB` (coherente; `t_infer` en línea con 0.62-0.66 históricos); `evaluate` MAE=11.5mm idéntico; `live --frames 3` OK; tests OK.
 
-- [x] `.venv` con Python 3.11.15 (`uv venv --python 3.11`).
-- [x] `uv python pin 3.11`, `pyproject.toml` + `uv.lock` creados, `uv run python` → 3.11.15 MSC 64-bit.
-- [x] Archivos existentes: carpeta vacía salvo `.venv` + `plan.md`. Sin instalación global ni firmware tocados.
-- [x] GPU: `nvidia-smi` → RTX 4070 Laptop GPU, driver 591.74, 8188 MiB. `torch.cuda` pendiente de Fase 1 (torch aún no instalado).
-- [x] Vía MCP obscura leídos: README, `environment.yml` (python 3.11, torch 2.4.1/torchvision 0.19.1/xformers 0.0.28.post1, opencv-contrib-python), `scripts/run_demo.py` (args `--scale/--hiera/--valid_iters/--z_far/--get_pc`, `depth=K[0,0]*baseline/disp`), issue Windows #219 (torch 2.6.0+torchvision 0.21.0 cu124, xformers cu124, flash-attn wheel `kingbri1/flash-attention`, parches offline dinov2 local + edgenext_small `pytorch_model.bin`).
-- [x] FoundationStereo `HEAD = 6e8806816b533e4d13ddbb95ffa907b797060a62`. Checkpoint inicial pendiente de descarga: ViT-small `11-33-40` (Drive oficial).
+## 4. FoundationPose Windows (ref: https://github.com/NVlabs/FoundationPose) — hecho
+- [x] Toolchain sistema: CUDA Toolkit 12.4.1 (`nvcc V12.4.131`), `CUDA_HOME` usuario fijado, cmake 4.4.4, MSVC 14.44. Sin tocar `torch/torchvision/xformers/flash-attn`; `uv.lock` intacto.
+- [x] Auditados imports model-based: compilar pytorch3d + nvdiffrast + mycpp; pip `kornia/ruamel.yaml/pandas/transformations/omegaconf/h5py/sklearn/warp-lang==1.8.0`; omitidos kaolin/pyrender/pyOpenGL/mycuda (no están en la cadena del demo).
+- [x] Proyecto uv separado `pose/` con `torch 2.6.0+cu124`; vcpkg Boost (system, program-options, assign, format, algorithm) + Eigen3.
+- [x] Demo oficial `run_demo.py` completa: 737 poses `debug/ob_in_cam/` (register + track). Detalle en `pose/WINDOWS.md`.
+- Nota: `track_refine_iter` default upstream = 2 (paper cita 1); editable, se fija en paso 6.
 
-## 1. Dependencias Windows — hecho 2026-10-06
+## 5. Malla `scripts/prepare_mesh.py` — hecho (pendiente confirmación física tuya)
+- [x] Localizado `3D Models/*.obj+.mtl+images/` (8 materiales PBR, texturas completas).
+- [x] `prepare_mesh.py`: reescribe solo vértices `v'=s·v+t` (caras/UV/MTL intactos), `--units` declarado, `--origin keep|center`, `--expect L,W,H` verifica tamaño físico, guarda `transform_original_to_prepared.json`, reverifica recargando.
+- [x] Medido: 8 partes, 79860 caras, 59062 verts, ext [88.3, 60.3, 122.3] mm (ejes x,y,z), UVs OK, 0 texturas perdidas. Carga en env `pose/` con normales.
+- [ ] TUYO: confirma que [88.3, 60.3, 122.3] mm encaja con tu mouse físico (largo≈122, ancho≈88, alto≈60) o pasa `--expect` medido; si el alto no cuadra, revisamos orientación antes del paso 6.
 
-- [x] Índice oficial explícito en `pyproject.toml`: `[[tool.uv.index]] pytorch-cu124 = https://download.pytorch.org/whl/cu124` + `tool.uv.sources` para torch/torchvision/xformers.
-- [x] Resolución conjunta: `torch 2.6.0+cu124`, `torchvision 0.21.0+cu124`, `xformers 0.0.29.post3` (no copiadas de Linux 2.4.1/0.19.1/0.0.28, sino receta Windows issue #219).
-- [x] `uv run python`: `cuda: True`, `NVIDIA GeForce RTX 4070 Laptop GPU`.
-- [x] flash-attn: wheel de terceros `kingbri1/flash-attention` v2.8.3, asset exacto `cu124+torch2.6.0+cp311-win_amd64` (56 MB), `import flash_attn` → 2.8.3 OK. Sin adaptaciones de atención (código FS no importa `flash` directamente en core/dinov2).
-- [x] OpenCV único: `opencv-contrib-python 5.0.0.93`.
-- [x] Pesos `11-33-40` en `pretrained_models/11-33-40/` (`cfg.yaml` vit_size `vits` + `model_best_bp2.pth` 787 MB, cabecera ZIP válida; unpickle completo pendiente de `omegaconf`, va con el resto del env en Fase 2).
-- [x] Fase 2 cerrada 2026-10-07: FS clonado en `third_party/` (`6e88068` = HEAD registrado), deps demo añadidas (timm, omegaconf, imageio, open3d, trimesh, joblib, pandas, hf-hub, pyyaml, scipy). Parches offline #219 NO necesarios (hay red: timm/dinov2 bajan de HF). Shim propio `scripts/run_official_demo.py` (torch 2.6 `weights_only=False` + `--no-viz`; third_party intacto).
-- [x] Demo oficial OK con `11-33-40`, `valid_iters=16`, `--scale 0.5`: `data/processed/demo_oficial/` (depth 270×480 f32, mediana 0.49 m) + `reports/figures/demo_oficial_11-33-40.png`.
-- [x] Veredicto escala 1.0 (2026-10-07, VRAM libre): **era contención, no límite del modelo** — 960×540 completo en 9.4 s pared (carga+infer+ply), depth 540×960 f32, 90.7% válidos>0, mediana 0.51 m, en `data/processed/demo_oficial_scale1/` + `reports/figures/demo_oficial_11-33-40_scale1.png`. Lección: medir siempre con VRAM libre; revalidar picos en `infer.py`.
+## 6. Pose estática model-based `pose_model.py + pose.py` — hecho V1 (1 captura)
+- [x] `pose/pose_model.py`: multitela→vertex-colors, `estimate_pose` (coarse+refine5+scorer), `track_pose` (solo refine), `render_depth`/`fit_metrics`/`draw_overlay` (rojo solo display, scores=ranking).
+- [x] `pose/pose_static.py` CLI reusa `infer/project`; `depth inf→0` en borde API, máscara original intacta.
+- [x] Primera pose real `20261008_040430` (máscara gruesa bbox+profundidad, documentada): `valid_frac=0.94`, `resid_med=0.8mm`, `t_est=11.4s`, `vram=138MiB`. Salidas en `data/processed/<cap>_pose/` + `meta_pose.json`.
+- [x] Bugs de frames cazados: tensores CUDA→numpy, orden retornos render, malla centrada vs `best_pose` (silueta con `pose_last`), ejes al centro (origen OBJ fuera de frame).
+- [x] Segunda captura `20261008_044401` (ratón girado): `valid_frac=0.944`, `resid_med=1.2mm`, CAD encaja visualmente; rotación relativa 61.6° coherente con el giro físico. Validación cruzada OK.
+- [x] Serie estabilidad (3 capturas, ratón quieto): frac 0.940±0.000, residuo ≤1.5mm; jitter entre pares 0.5-3.1° / 1.8-7.5mm (t std [1.7,0.2,2.7]mm). Repetible para V1; el vivo deberá suavizar.
 
-## 2. Captura D415 (`scripts/capture.py`) — hecho 2026-10-07
+## 7. Validar → vivo `live_pose.py` — en curso
+- [x] Track por etapas `pose/track_burst.py` (5 frames con movimiento): INIT 15.9s, TRACK 0.14-0.21s, frac≈0.94, residuo ~1mm, 0 LOST. VRAM track 190MiB.
+- [x] Hallazgo: `Utils` top-level colisiona entre repos → worker FS en proceso aparte (`scripts/fs_worker.py`, protocolo líneas) + `pose/live_pose.py` orquesta (captura porteada, proyección, register/track, HUD lat/edad/fps/estado, r/s/q).
+- [ ] Smoke `live_pose --frames 3` + medición conjunta 8GB + serie viva con movimiento.
 
-- [x] IR1+IR2+depth 640×480@30fps verificada en cámara real (D415 `151322068842`).
-- [x] Mismo frameset, `dt=0.0 ms`, warmup 60 framesets, `pipeline.stop()` en `finally`, errores claros (sin cámara / combo no soportada / incompleta / desincronizada).
-- [x] Dos capturas en `data/raw/`: `*_emitter-on` y `*_emitter-off`, cada una con `left.png/right.png/depth_original.npy (480×640)/calibration.json/metadata.json`.
-- [x] Calibración real: `fx=592.88` px, `|B|=0.055` m (signo según convención ir1→ir2), depth scale del sensor. Sin valores manuales.
-
-## 3. Integración FoundationStereo (`scripts/infer.py`) — hecho 2026-10-07
-
-- [x] IR mono → 3 canales replicados sin tocar intensidades; `eval()`, sin gradientes, un par a la vez.
-- [x] Ambas capturas a 640×480, `valid_iters=16`, AMP validada (`amp_ok=True`).
-- [x] Medido en 4070 libre: `t_load=2.7 s`, `t_infer=0.62-0.66 s`, `vram=1646 MiB`. Salidas: `disp.npy` + `meta.json` en `data/processed/<captura>_fs/`.
-
-## 4. Disparidad → profundidad (`disparity_to_depth.py`) — hecho 2026-10-07
-
-- [x] IR rectificadas (coeffs=0), `cx` IR1==IR2 → `Z=fx·|B|/d` sin corrección. `fx` px, `|B|=0.055` m de calibración real, `d` px misma resolución (focal escalada con `scale`).
-- [x] Máscara `d>0` + rango `z_min/z_max` (0.2–10 m). Nube en frame IR-izq, sin intrínsecos RGB.
-
-## 5. RGB + proyección (`capture.py` color, `project_to_rgb.py`) — hecho 2026-10-07
-
-- [x] Captura guarda `color.png` + intrínsecos RGB + extrínseco IR-izq→RGB + intrínsecos depth (verifica viewpoint depth==IR1).
-- [x] Proyección con z-buffer a geometría RGB: `depth_on_rgb.npy` + `overlay.png` + `cloud_color.ply` (puntos en IR-izq coloreados).
-- [x] Verificado on/off: ~288k puntos, 93.8% cae en RGB, zmed ~0.88 m. Figuras en `reports/figures/overlay_rgb_{on,off}.png`.
-
-## 6. Comparar y evaluar (`scripts/evaluate.py`) — hecho 2026-10-07
-
-- [x] Panel IR-L/IR-R/disparidad/FS/D415/diferencia, misma colormap y geometría (D415 remuestreada nearest solo si difiere).
-- [x] Misma escena on/off: ON → MAE 11.5 mm, med 2.1 mm, válido conjunto 86.6%; OFF → MAE 51.7 mm, med 11.6 mm, válido 44.8%. Lectura: el emisor suma cobertura D415, no precisión FS; D415 es comparación, no GT.
-- [x] Tiempos de `meta.json` (`t_load≈2.5 s`, `t_infer≈0.63 s`, `vram=1646 MiB`) + `t_eval_s` en `metrics.json`. Repetibilidad en escena fija controlada: pendiente.
-
-- [ ] Figura: IR-L/R, disparidad FS, profundidad FS, profundidad D415, diferencia en válidos. Misma colormap y geometría/resolución antes de restar.
-- [ ] Métricas: `t_load`, `t_infer` post-warmup, `t_total`, pico VRAM, % válidos, MAE/mediana vs D415, varianza en escena fija.
-- [ ] D415 = comparación, no GT; precisión absoluta con distancias conocidas/referencia externa.
-
-## 7. Validación práctica (pendiente)
-
-- [ ] Plano + piezas (poca textura, bordes, reflejos). Trípode, emisor on/off, log luz/distancia/config.
-- [ ] Distinguir cobertura vs precisión. FPS medidos en esta laptop, no del PDF ni otra GPU.
-- [ ] Repetibilidad en escena fija controlada + distancia conocida (exactitud absoluta).
-
-## 8. Captura continua (`scripts/live.py`, tras validar estático) — hecho 2026-10-07
-
-- [x] Hilo de captura + inferencia en principal, `Queue(maxsize=2)` descartando viejos, calibración pegada a cada item.
-- [x] Muestra D415 | FS + `t_infer`/fps. `s` guarda captura formato `capture.py`, `q`/ESC sale, `--frames N` para pruebas. `pipe.stop()` + ventanas siempre.
-- [x] Núcleo compartido `scripts/fs_model.py` (`infer.py` adelgazado y reverificado: mismos números). Smoke test `--frames 3` OK, cámara liberada.
-
-- [ ] Hilos separados captura/inferencia, `queue(maxsize=1-2)` descartando viejos, calibración pegada a cada frame.
-- [ ] Mostrar ambas profundidades + tiempos, guardar capturas bajo tecla, salir liberando cámara.
-
-## Entregables
-
-`capture/infer/disparity_to_depth/evaluate/live` + `config.toml` (resolución, emisor, checkpoint, iters, rango), `pyproject.toml+uv.lock`, README con PowerShell+uv reproducible, `results/` ejemplo con tiempos/VRAM/limitaciones, errores claros (sin cámara/pesos/OOM).
-
-Pendiente: notebook marimo `notebooks/03-compara.py`.
+## 8. Config y entregables
+- [ ] `config.toml:[pose] mesh, scale, pesos, mask, iters_init/track, umbrales lost, viz_alpha`. CLI gana.
+- [ ] README `uv run` reproducibles: `prepare_mesh/pose/live_pose`. No subir pesos/capturas/mallas. Registrar revs externas.
+- [ ] Reportar cambios, verificaciones, VRAM (`t_fs/t_init/t_track` separados), bloqueos. No vender cifras README como precisión absoluta.
