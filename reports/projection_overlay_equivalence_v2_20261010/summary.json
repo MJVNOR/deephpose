@@ -1,0 +1,17 @@
+{
+  "frames": 161,
+  "exact": true,
+  "fields": [
+    "depth",
+    "validity",
+    "K",
+    "RGB",
+    "axis_pixels"
+  ],
+  "timings_ms_p50": {
+    "projection_reference_ms": 51.96569999679923,
+    "projection_fast_ms": 33.51290011778474,
+    "axes_reference_ms": 31.093700090423226,
+    "axes_fast_ms": 0.12179999612271786
+  }
+}

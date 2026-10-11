@@ -1,0 +1,122 @@
+[
+  {
+    "variant": "ev",
+    "precision": "bf16",
+    "text": "computer mouse",
+    "max_score": 0.2490234375,
+    "top_iou": 0.9697281713344317,
+    "best_iou": 0.9697281713344317,
+    "best_iou_score": 0.2490234375,
+    "top_pixels": 14149
+  },
+  {
+    "variant": "ev",
+    "precision": "bf16",
+    "text": "mouse",
+    "max_score": 0.3671875,
+    "top_iou": 0.9690268525513358,
+    "best_iou": 0.9690268525513358,
+    "best_iou_score": 0.3671875,
+    "top_pixels": 14125
+  },
+  {
+    "variant": "ev",
+    "precision": "bf16",
+    "text": "wireless mouse",
+    "max_score": 0.44140625,
+    "top_iou": 0.03357777464391482,
+    "best_iou": 0.9714266183607903,
+    "best_iou_score": 0.029052734375,
+    "top_pixels": 132036
+  },
+  {
+    "variant": "ev",
+    "precision": "bf16",
+    "text": "black computer mouse",
+    "max_score": 0.408203125,
+    "top_iou": 0.9710343880842885,
+    "best_iou": 0.9710343880842885,
+    "best_iou_score": 0.408203125,
+    "top_pixels": 14170
+  },
+  {
+    "variant": "ev",
+    "precision": "bf16",
+    "text": "remote control",
+    "max_score": 0.232421875,
+    "top_iou": 0.9400769653655855,
+    "best_iou": 0.9400769653655855,
+    "best_iou_score": 0.232421875,
+    "top_pixels": 13686
+  },
+  {
+    "variant": "ev",
+    "precision": "bf16",
+    "text": "object",
+    "max_score": 0.65625,
+    "top_iou": 0.001086308255942745,
+    "best_iou": 0.9645896239363162,
+    "best_iou_score": 0.6328125,
+    "top_pixels": 126451
+  },
+  {
+    "variant": "ev",
+    "precision": "fp32",
+    "text": "computer mouse",
+    "max_score": 0.2482147365808487,
+    "top_iou": 0.9701318319143093,
+    "best_iou": 0.9701318319143093,
+    "best_iou_score": 0.2482147365808487,
+    "top_pixels": 14147
+  },
+  {
+    "variant": "ev",
+    "precision": "fp32",
+    "text": "mouse",
+    "max_score": 0.34871143102645874,
+    "top_iou": 0.9688143975820854,
+    "best_iou": 0.9688143975820854,
+    "best_iou_score": 0.34871143102645874,
+    "top_pixels": 14116
+  },
+  {
+    "variant": "ev",
+    "precision": "fp32",
+    "text": "wireless mouse",
+    "max_score": 0.4473249912261963,
+    "top_iou": 0.027851169213643057,
+    "best_iou": 0.9715380405035577,
+    "best_iou_score": 0.0317702516913414,
+    "top_pixels": 131340
+  },
+  {
+    "variant": "ev",
+    "precision": "fp32",
+    "text": "black computer mouse",
+    "max_score": 0.4234209954738617,
+    "top_iou": 0.9708244662593534,
+    "best_iou": 0.9708244662593534,
+    "best_iou_score": 0.4234209954738617,
+    "top_pixels": 14163
+  },
+  {
+    "variant": "ev",
+    "precision": "fp32",
+    "text": "remote control",
+    "max_score": 0.24084538221359253,
+    "top_iou": 0.9507284222100055,
+    "best_iou": 0.9649134853062346,
+    "best_iou_score": 0.02440294623374939,
+    "top_pixels": 13841
+  },
+  {
+    "variant": "ev",
+    "precision": "fp32",
+    "text": "object",
+    "max_score": 0.6610749363899231,
+    "top_iou": 0.0010715375499400364,
+    "best_iou": 0.9738176833447567,
+    "best_iou_score": 0.02173159271478653,
+    "top_pixels": 126524
+  }
+]

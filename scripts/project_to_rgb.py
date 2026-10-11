@@ -9,6 +9,7 @@ Uso:
 import argparse
 import json
 import sys
+from functools import lru_cache
 from pathlib import Path
 
 import cv2
@@ -47,7 +48,7 @@ def rectify_color(color_rgb, cal_color):
     return cv2.remap(color_rgb, m1, m2, cv2.INTER_LINEAR), newK, True
 
 
-def splat_to_rgb(u, v, zc, H, W):
+def _splat_to_rgb_sorted(u, v, zc, H, W):
     """Z-buffer explícito min-Z. Devuelve (buf inf=H×W, arg=-1 o índice ganador). Vacío-seguro."""
     buf = np.full((H, W), np.inf)
     arg = np.full((H, W), -1)
@@ -62,39 +63,85 @@ def splat_to_rgb(u, v, zc, H, W):
     return buf, arg
 
 
-def project_ir_to_rgb(depth, valid, K_ir, rotation, translation, color_rgb, cal_color):
+def splat_to_rgb(u, v, zc, H, W):
+    """Min-Z sin ordenar; empates conservan el primer índice original.
+
+    Dos reducciones indexadas conservan tanto profundidad como procedencia.
+    La ruta excepcional no finita mantiene la semántica del ordenamiento.
+    """
+    if not np.isfinite(zc).all():
+        return _splat_to_rgb_sorted(u, v, zc, H, W)
+    buf = np.full((H, W), np.inf)
+    arg = np.full((H, W), -1)
+    if len(zc) == 0:
+        return buf, arg
+    lin = v * W + u
+    np.minimum.at(buf.ravel(), lin, zc)
+    candidates = np.flatnonzero(zc == buf.ravel()[lin])
+    winners = np.full(H * W, len(zc), dtype=np.intp)
+    np.minimum.at(winners, lin[candidates], candidates)
+    hit = winners != len(zc)
+    arg.ravel()[hit] = winners[hit]
+    # Recuperar el valor original conserva incluso el signo de cero en empates.
+    buf.ravel()[hit] = zc[winners[hit]]
+    return buf, arg
+
+
+@lru_cache(maxsize=4)
+def _pixel_grid(shape):
+    ys, xs = np.mgrid[0:shape[0], 0:shape[1]].astype(np.float32)
+    ys.flags.writeable = xs.flags.writeable = False
+    return ys, xs
+
+
+def project_ir_to_rgb(depth, valid, K_ir, rotation, translation, color_rgb, cal_color, *, sorted_zbuffer=False, return_details=True):
     """Núcleo reutilizable estático/vivo. rotation en column-major RealSense.
 
     Devuelve (depth_on_rgb f32 con inf, mask_valid bool, K_rect 3x3,
     color_rect RGB uint8, detail{u,v,zc,pts,arg}).
+    return_details=False omite la nube auxiliar y devuelve None como quinto valor.
     """
     color_rect, K_rect, _ = rectify_color(color_rgb, cal_color)
     Hc, Wc = color_rect.shape[:2]
     R = np.array(rotation, dtype=np.float64).reshape(3, 3, order="F")  # col-major SDK
     t = np.array(translation, dtype=np.float64)
-    xyz = depth_to_xyz(depth, np.asarray(K_ir, dtype=np.float64))
-    pts = xyz[valid]  # (N,3) en IR-izq
+    K_ir = np.asarray(K_ir, dtype=np.float64)
+    if return_details:
+        xyz = depth_to_xyz(depth, K_ir)
+        pts = xyz[valid]  # (N,3) en IR-izq
+    else:
+        ys, xs = _pixel_grid(depth.shape)
+        z = depth[valid]
+        # Keep subtraction/multiplication/division order and NumPy scalar dtypes.
+        pts = np.stack(((xs[valid] - K_ir[0, 2]) * z / K_ir[0, 0],
+                        (ys[valid] - K_ir[1, 2]) * z / K_ir[1, 1], z), axis=-1)
     if len(pts) == 0:
         return (np.full((Hc, Wc), np.inf, dtype=np.float32),
                 np.zeros((Hc, Wc), bool), K_rect, color_rect,
                 {"u": np.zeros(0, int), "v": np.zeros(0, int),
-                 "zc": np.zeros(0), "pts": pts, "arg": np.full((Hc, Wc), -1)})
+                 "zc": np.zeros(0), "pts": pts, "arg": np.full((Hc, Wc), -1)} if return_details else None)
     pc = (R @ pts.T).T + t  # a frame RGB
     zc = pc[:, 2]
     front = zc > 0
-    pts, pc, zc = pts[front], pc[front], zc[front]
+    if return_details:
+        pts = pts[front]
+    if not front.all():
+        pc, zc = pc[front], zc[front]
     if len(zc) == 0:
         return (np.full((Hc, Wc), np.inf, dtype=np.float32),
                 np.zeros((Hc, Wc), bool), K_rect, color_rect,
                 {"u": np.zeros(0, int), "v": np.zeros(0, int),
-                 "zc": zc, "pts": pts, "arg": np.full((Hc, Wc), -1)})
+                 "zc": zc, "pts": pts, "arg": np.full((Hc, Wc), -1)} if return_details else None)
     u = (K_rect[0, 0] * pc[:, 0] / zc + K_rect[0, 2]).round().astype(int)
     v = (K_rect[1, 1] * pc[:, 1] / zc + K_rect[1, 2]).round().astype(int)
     inside = (u >= 0) & (u < Wc) & (v >= 0) & (v < Hc)
-    pts, u, v, zc = pts[inside], u[inside], v[inside], zc[inside]
-    buf, arg = splat_to_rgb(u, v, zc, Hc, Wc)
+    if return_details:
+        pts = pts[inside]
+    u, v, zc = u[inside], v[inside], zc[inside]
+    splat = _splat_to_rgb_sorted if sorted_zbuffer else splat_to_rgb
+    buf, arg = splat(u, v, zc, Hc, Wc)
     return buf.astype(np.float32), arg >= 0, K_rect, color_rect, \
-        {"u": u, "v": v, "zc": zc, "pts": pts, "arg": arg}
+        ({"u": u, "v": v, "zc": zc, "pts": pts, "arg": arg} if return_details else None)
 
 
 def parse_args():

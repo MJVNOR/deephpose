@@ -1,0 +1,62 @@
+{
+  "note": "Five warmed inferences per scale; immediate-child module CUDA-event intervals; functional work is outside modules. Operator profiler is a separate call, not an FPS measurement.",
+  "scales": {
+    "0.5": {
+      "input_hw": [
+        240,
+        320
+      ],
+      "padded_hw": [
+        256,
+        320
+      ],
+      "model_ms_p50": 172.0,
+      "modules_ms_p50": {
+        "feature": 32.90812683105469,
+        "stem_2": 0.35942399501800537,
+        "proj_cmb": 0.45875199139118195,
+        "corr_stem": 11.257856369018555,
+        "corr_feature_att": 0.3235839903354645,
+        "cost_agg": 19.298303604125977,
+        "classifier": 26.14784049987793,
+        "cnet": 4.886752128601074,
+        "cam": 0.40748799592256546,
+        "sam": 0.17955200001597404,
+        "update_block": 26.76313591003418,
+        "spx_2_gru": 0.4126720130443573,
+        "spx_gru": 0.20684799551963806
+      }
+    },
+    "0.4": {
+      "input_hw": [
+        192,
+        256
+      ],
+      "padded_hw": [
+        192,
+        256
+      ],
+      "model_ms_p50": 112.0,
+      "modules_ms_p50": {
+        "feature": 23.348224639892578,
+        "stem_2": 0.3563520014286041,
+        "proj_cmb": 0.4883520156145096,
+        "corr_stem": 5.846015930175781,
+        "corr_feature_att": 0.14233599603176117,
+        "cost_agg": 11.719679832458496,
+        "classifier": 16.104448318481445,
+        "cnet": 3.7898240089416504,
+        "cam": 0.3491840064525604,
+        "sam": 0.15872000344097614,
+        "update_block": 17.48479986190796,
+        "spx_2_gru": 0.13619199395179749,
+        "spx_gru": 0.12800000607967377
+      }
+    }
+  },
+  "supported_profiler_activities": [
+    "ProfilerActivity.CPU"
+  ],
+  "cuda_kernel_trace_available": false,
+  "profiler_verification": "torch.profiler.supported_activities returned CPU only; trace_scale0.5 contains CPU ops and no kernel records. Module timings use explicit CUDA events independently."
+}

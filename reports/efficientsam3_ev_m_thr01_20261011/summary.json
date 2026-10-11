@@ -1,0 +1,740 @@
+{
+  "backend": "efficient",
+  "variant": "ev",
+  "threshold": 0.1,
+  "model_load_s": 5.781618400011212,
+  "parameters": 97435030,
+  "python": "3.12.13",
+  "torch": "2.7.1+cu126",
+  "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+  "checkpoint_sha256": "086b04b2e7da7cc98aa4621b70c7291608aa9d187357b98d03bd4d6533ed5a17",
+  "rows": [
+    {
+      "frame": 60,
+      "index": 0,
+      "repeat": 0,
+      "seconds": 0.19103919994086027,
+      "detected": true,
+      "pixels": 14149,
+      "box": [
+        336,
+        266,
+        525,
+        370
+      ],
+      "score": 0.2490234375,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 60,
+      "index": 0,
+      "repeat": 1,
+      "seconds": 0.1679841000586748,
+      "detected": true,
+      "pixels": 14149,
+      "box": [
+        336,
+        266,
+        525,
+        370
+      ],
+      "score": 0.2490234375,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 180,
+      "index": 8,
+      "repeat": 0,
+      "seconds": 0.1747731000650674,
+      "detected": true,
+      "pixels": 14085,
+      "box": [
+        336,
+        266,
+        525,
+        369
+      ],
+      "score": 0.25390625,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 180,
+      "index": 8,
+      "repeat": 1,
+      "seconds": 0.1639598999172449,
+      "detected": true,
+      "pixels": 14085,
+      "box": [
+        336,
+        266,
+        525,
+        369
+      ],
+      "score": 0.25390625,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 300,
+      "index": 16,
+      "repeat": 0,
+      "seconds": 0.16575859999284148,
+      "detected": true,
+      "pixels": 13878,
+      "box": [
+        336,
+        268,
+        524,
+        370
+      ],
+      "score": 0.1943359375,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 300,
+      "index": 16,
+      "repeat": 1,
+      "seconds": 0.16617439989931881,
+      "detected": true,
+      "pixels": 13878,
+      "box": [
+        336,
+        268,
+        524,
+        370
+      ],
+      "score": 0.1943359375,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 420,
+      "index": 24,
+      "repeat": 0,
+      "seconds": 0.209152199793607,
+      "detected": true,
+      "pixels": 14118,
+      "box": [
+        335,
+        265,
+        525,
+        369
+      ],
+      "score": 0.28515625,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 420,
+      "index": 24,
+      "repeat": 1,
+      "seconds": 0.16158449999056756,
+      "detected": true,
+      "pixels": 14118,
+      "box": [
+        335,
+        265,
+        525,
+        369
+      ],
+      "score": 0.28515625,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 540,
+      "index": 32,
+      "repeat": 0,
+      "seconds": 0.15477290004491806,
+      "detected": true,
+      "pixels": 14019,
+      "box": [
+        335,
+        265,
+        524,
+        370
+      ],
+      "score": 0.2236328125,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 540,
+      "index": 32,
+      "repeat": 1,
+      "seconds": 0.15504019986838102,
+      "detected": true,
+      "pixels": 14019,
+      "box": [
+        335,
+        265,
+        524,
+        370
+      ],
+      "score": 0.2236328125,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 660,
+      "index": 40,
+      "repeat": 0,
+      "seconds": 0.1674964998383075,
+      "detected": true,
+      "pixels": 14089,
+      "box": [
+        336,
+        266,
+        524,
+        369
+      ],
+      "score": 0.263671875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 660,
+      "index": 40,
+      "repeat": 1,
+      "seconds": 0.14416610007174313,
+      "detected": true,
+      "pixels": 14089,
+      "box": [
+        336,
+        266,
+        524,
+        369
+      ],
+      "score": 0.263671875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 780,
+      "index": 48,
+      "repeat": 0,
+      "seconds": 0.1543709000106901,
+      "detected": true,
+      "pixels": 13950,
+      "box": [
+        336,
+        266,
+        524,
+        369
+      ],
+      "score": 0.2734375,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 780,
+      "index": 48,
+      "repeat": 1,
+      "seconds": 0.1891449000686407,
+      "detected": true,
+      "pixels": 13950,
+      "box": [
+        336,
+        266,
+        524,
+        369
+      ],
+      "score": 0.2734375,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 900,
+      "index": 56,
+      "repeat": 0,
+      "seconds": 0.15624030004255474,
+      "detected": true,
+      "pixels": 14002,
+      "box": [
+        335,
+        267,
+        524,
+        370
+      ],
+      "score": 0.310546875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 900,
+      "index": 56,
+      "repeat": 1,
+      "seconds": 0.14747099997475743,
+      "detected": true,
+      "pixels": 14002,
+      "box": [
+        335,
+        267,
+        524,
+        370
+      ],
+      "score": 0.310546875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1020,
+      "index": 64,
+      "repeat": 0,
+      "seconds": 0.1541052998509258,
+      "detected": true,
+      "pixels": 14028,
+      "box": [
+        336,
+        266,
+        524,
+        369
+      ],
+      "score": 0.201171875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1020,
+      "index": 64,
+      "repeat": 1,
+      "seconds": 0.16481289989314973,
+      "detected": true,
+      "pixels": 14028,
+      "box": [
+        336,
+        266,
+        524,
+        369
+      ],
+      "score": 0.201171875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1140,
+      "index": 72,
+      "repeat": 0,
+      "seconds": 0.15259930002503097,
+      "detected": false,
+      "pixels": 0,
+      "box": null,
+      "score": null,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1140,
+      "index": 72,
+      "repeat": 1,
+      "seconds": 0.15586469997651875,
+      "detected": false,
+      "pixels": 0,
+      "box": null,
+      "score": null,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1260,
+      "index": 80,
+      "repeat": 0,
+      "seconds": 0.1531130000948906,
+      "detected": false,
+      "pixels": 0,
+      "box": null,
+      "score": null,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1260,
+      "index": 80,
+      "repeat": 1,
+      "seconds": 0.15546789998188615,
+      "detected": false,
+      "pixels": 0,
+      "box": null,
+      "score": null,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1380,
+      "index": 88,
+      "repeat": 0,
+      "seconds": 0.15688969986513257,
+      "detected": true,
+      "pixels": 17687,
+      "box": [
+        325,
+        187,
+        551,
+        296
+      ],
+      "score": 0.1435546875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1380,
+      "index": 88,
+      "repeat": 1,
+      "seconds": 0.14957799995318055,
+      "detected": true,
+      "pixels": 17687,
+      "box": [
+        325,
+        187,
+        551,
+        296
+      ],
+      "score": 0.1435546875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1500,
+      "index": 96,
+      "repeat": 0,
+      "seconds": 0.1503349000122398,
+      "detected": true,
+      "pixels": 30326,
+      "box": [
+        325,
+        109,
+        569,
+        305
+      ],
+      "score": 0.1279296875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1500,
+      "index": 96,
+      "repeat": 1,
+      "seconds": 0.15332949999719858,
+      "detected": true,
+      "pixels": 30326,
+      "box": [
+        325,
+        109,
+        569,
+        305
+      ],
+      "score": 0.1279296875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1620,
+      "index": 104,
+      "repeat": 0,
+      "seconds": 0.14158460008911788,
+      "detected": true,
+      "pixels": 26090,
+      "box": [
+        318,
+        122,
+        576,
+        264
+      ],
+      "score": 0.1640625,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1620,
+      "index": 104,
+      "repeat": 1,
+      "seconds": 0.1449543999042362,
+      "detected": true,
+      "pixels": 26090,
+      "box": [
+        318,
+        122,
+        576,
+        264
+      ],
+      "score": 0.1640625,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1740,
+      "index": 112,
+      "repeat": 0,
+      "seconds": 0.1486049999948591,
+      "detected": false,
+      "pixels": 0,
+      "box": null,
+      "score": null,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1740,
+      "index": 112,
+      "repeat": 1,
+      "seconds": 0.14576049987226725,
+      "detected": false,
+      "pixels": 0,
+      "box": null,
+      "score": null,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1860,
+      "index": 120,
+      "repeat": 0,
+      "seconds": 0.14771710010245442,
+      "detected": true,
+      "pixels": 15484,
+      "box": [
+        346,
+        129,
+        573,
+        249
+      ],
+      "score": 0.11083984375,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1860,
+      "index": 120,
+      "repeat": 1,
+      "seconds": 0.15764640015549958,
+      "detected": true,
+      "pixels": 15484,
+      "box": [
+        346,
+        129,
+        573,
+        249
+      ],
+      "score": 0.11083984375,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1980,
+      "index": 128,
+      "repeat": 0,
+      "seconds": 0.15131479990668595,
+      "detected": true,
+      "pixels": 30011,
+      "box": [
+        386,
+        151,
+        597,
+        385
+      ],
+      "score": 0.1484375,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 1980,
+      "index": 128,
+      "repeat": 1,
+      "seconds": 0.14830449991859496,
+      "detected": true,
+      "pixels": 30011,
+      "box": [
+        386,
+        151,
+        597,
+        385
+      ],
+      "score": 0.1484375,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 2100,
+      "index": 136,
+      "repeat": 0,
+      "seconds": 0.14588540000841022,
+      "detected": true,
+      "pixels": 13291,
+      "box": [
+        434,
+        127,
+        581,
+        267
+      ],
+      "score": 0.13671875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 2100,
+      "index": 136,
+      "repeat": 1,
+      "seconds": 0.1631871999707073,
+      "detected": true,
+      "pixels": 13291,
+      "box": [
+        434,
+        127,
+        581,
+        267
+      ],
+      "score": 0.13671875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 2220,
+      "index": 144,
+      "repeat": 0,
+      "seconds": 0.14071000018157065,
+      "detected": true,
+      "pixels": 19955,
+      "box": [
+        453,
+        142,
+        603,
+        315
+      ],
+      "score": 0.326171875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 2220,
+      "index": 144,
+      "repeat": 1,
+      "seconds": 0.15390719985589385,
+      "detected": true,
+      "pixels": 19955,
+      "box": [
+        453,
+        142,
+        603,
+        315
+      ],
+      "score": 0.326171875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 2340,
+      "index": 152,
+      "repeat": 0,
+      "seconds": 0.1591944000683725,
+      "detected": true,
+      "pixels": 18099,
+      "box": [
+        442,
+        125,
+        581,
+        312
+      ],
+      "score": 0.12158203125,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 2340,
+      "index": 152,
+      "repeat": 1,
+      "seconds": 0.1522761001251638,
+      "detected": true,
+      "pixels": 18099,
+      "box": [
+        442,
+        125,
+        581,
+        312
+      ],
+      "score": 0.12158203125,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 2460,
+      "index": 160,
+      "repeat": 0,
+      "seconds": 0.12880790000781417,
+      "detected": true,
+      "pixels": 17379,
+      "box": [
+        449,
+        151,
+        592,
+        327
+      ],
+      "score": 0.1201171875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    },
+    {
+      "frame": 2460,
+      "index": 160,
+      "repeat": 1,
+      "seconds": 0.12638720008544624,
+      "detected": true,
+      "pixels": 17379,
+      "box": [
+        449,
+        151,
+        592,
+        327
+      ],
+      "score": 0.1201171875,
+      "allocated_mib": 572.69482421875,
+      "peak_mib": 1098.68310546875,
+      "reserved_mib": 1196.0
+    }
+  ],
+  "upstream_commit": "bd0936c788fed8d51fa799437f05abd97b401b06"
+}

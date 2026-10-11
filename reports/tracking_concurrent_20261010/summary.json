@@ -1,0 +1,58 @@
+[
+  {
+    "label": "reference_r1",
+    "valid_iters": 4,
+    "scale": 0.5,
+    "legacy": false,
+    "updates": 355,
+    "reference_volumes": false,
+    "reference_cpu": false,
+    "reference_tracking": true,
+    "lost": 0,
+    "pose_hz": 4.380902948052478,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "candidate_r1",
+    "valid_iters": 4,
+    "scale": 0.5,
+    "legacy": false,
+    "updates": 349,
+    "reference_volumes": false,
+    "reference_cpu": false,
+    "reference_tracking": false,
+    "lost": 0,
+    "pose_hz": 4.304325856764547,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "candidate_r2",
+    "valid_iters": 4,
+    "scale": 0.5,
+    "legacy": false,
+    "updates": 351,
+    "reference_volumes": false,
+    "reference_cpu": false,
+    "reference_tracking": false,
+    "lost": 0,
+    "pose_hz": 4.326570853635323,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "reference_r2",
+    "valid_iters": 4,
+    "scale": 0.5,
+    "legacy": false,
+    "updates": 342,
+    "reference_volumes": false,
+    "reference_cpu": false,
+    "reference_tracking": true,
+    "lost": 0,
+    "pose_hz": 4.228237649547478,
+    "first_frame": 61,
+    "last_frame": 2465
+  }
+]

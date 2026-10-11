@@ -1,0 +1,49 @@
+{
+  "scale": 0.5,
+  "valid_iters": 4,
+  "frames": 161,
+  "volumes": {
+    "gwc": {
+      "shape": [
+        1,
+        128,
+        64,
+        80
+      ],
+      "dtype": "torch.float16",
+      "exact": true,
+      "max_abs_diff": 0.0,
+      "ms_p50": {
+        "reference": 18.085375785827637,
+        "candidate": 4.208639860153198
+      }
+    },
+    "concat": {
+      "shape": [
+        1,
+        12,
+        64,
+        80
+      ],
+      "dtype": "torch.float16",
+      "exact": true,
+      "max_abs_diff": 0.0,
+      "ms_p50": {
+        "reference": 5.243824005126953,
+        "candidate": 0.36905600130558014
+      }
+    }
+  },
+  "exact_disparity_frames": 161,
+  "max_abs_diff_px": 0.0,
+  "model_ms_p50": {
+    "reference": 160.0,
+    "candidate": 135.0
+  },
+  "sources": {
+    "C:\\Users\\marti\\Documents\\deephMeasure\\scripts\\validate_fs_volumes.py": "60f7d0abd58f54c6f871efb3624ebdd37c16a653aa2dd8e37d3f68fd21a56976",
+    "scripts\\fs_model.py": "fed1ae3d515cf550222e8e15d80b4426e719213b9342072e6455f9d2d7cb16b8",
+    "scripts\\fs_volumes.py": "c93585522cd6089b37c157bfca01c5e067bf502e130f3b63bfcb9d214447f467",
+    "data\\processed\\replay_20261010_fixed_v3\\manifest.json": "c391333e3cc2fbc2e12bcd934dcd6523c90f19620e3500fde3b5c21dbdcb7f04"
+  }
+}

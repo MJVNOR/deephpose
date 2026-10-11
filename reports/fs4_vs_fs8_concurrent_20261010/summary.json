@@ -1,0 +1,42 @@
+[
+  {
+    "label": "reference_r1",
+    "valid_iters": 8,
+    "legacy": false,
+    "updates": 272,
+    "lost": 0,
+    "pose_hz": 3.3545317458733677,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "candidate_r1",
+    "valid_iters": 4,
+    "legacy": false,
+    "updates": 296,
+    "lost": 0,
+    "pose_hz": 3.6497755684333986,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "candidate_r2",
+    "valid_iters": 4,
+    "legacy": false,
+    "updates": 290,
+    "lost": 0,
+    "pose_hz": 3.5740303038398205,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "reference_r2",
+    "valid_iters": 8,
+    "legacy": false,
+    "updates": 268,
+    "lost": 0,
+    "pose_hz": 3.2976634994434293,
+    "first_frame": 61,
+    "last_frame": 2465
+  }
+]

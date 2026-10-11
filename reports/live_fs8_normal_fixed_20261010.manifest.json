@@ -1,0 +1,35 @@
+{
+  "args": {
+    "mask": null,
+    "mask_text": "computer mouse",
+    "mesh": "data/mesh/mouse/910-007575_MX_MASTER_4_MAC_Space_Black_prepared.obj",
+    "out": "data/processed",
+    "width": 640,
+    "height": 480,
+    "fps": 30,
+    "emitter": "on",
+    "warmup": 60,
+    "dt_max": 33.0,
+    "z_min": 0.2,
+    "z_max": 10.0,
+    "scale": 0.5,
+    "valid_iters": 8,
+    "track_iters": 5,
+    "frames": 12,
+    "rec": false,
+    "bag": "data/bags/live_20261010_030134.db3",
+    "headless": true,
+    "metrics_jsonl": "reports\\live_fs8_normal_fixed_20261010.jsonl",
+    "benchmark_init": null,
+    "initial_state": null,
+    "legacy_costs": false
+  },
+  "mode": "live",
+  "sources": {
+    "C:\\Users\\marti\\Documents\\deephMeasure\\pose\\live_pose.py": "cbf69a55fd1fe7be1cae97e0177a619283f073a7c552dd90579a5015c43b14e2",
+    "C:\\Users\\marti\\Documents\\deephMeasure\\pose\\pose_model.py": "76b738180c009fa7a830509825ba34163b0c1d9c569f5d320ce13fd87559196d",
+    "C:\\Users\\marti\\Documents\\deephMeasure\\scripts\\fs_model.py": "775f4cafb6e13787652ab9b16447e22e3fdfb5dbe21401b0be72e06eee1c8296",
+    "C:\\Users\\marti\\Documents\\deephMeasure\\scripts\\fs_transport.py": "8b92534a83cdfec65bdb5e5df6716de09d563c2e60f27e40235ebe9cfbaabc5b",
+    "C:\\Users\\marti\\Documents\\deephMeasure\\scripts\\fs_worker.py": "ee30f1945ced5546987ea7fa3bb0f74b8f742339888d8e967301bbac4a014085"
+  }
+}

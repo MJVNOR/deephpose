@@ -1,0 +1,41 @@
+[
+  {
+    "fs_iters": 4,
+    "frames": 161,
+    "fs_model_ms_p50": 164.0,
+    "fs_model_ms_p95": 189.0,
+    "fs_projection_ms_p50": 263.6926001869142,
+    "lost_per_repeat": [
+      0,
+      0
+    ],
+    "pose_repeat_max_difference": 0.0,
+    "depth_difference_vs16_mm_p50_of_frame_medians": 0.7983744144439697
+  },
+  {
+    "fs_iters": 8,
+    "frames": 161,
+    "fs_model_ms_p50": 197.0,
+    "fs_model_ms_p95": 237.0,
+    "fs_projection_ms_p50": 298.4615000896156,
+    "lost_per_repeat": [
+      0,
+      0
+    ],
+    "pose_repeat_max_difference": 0.0,
+    "depth_difference_vs16_mm_p50_of_frame_medians": 0.32266974449157715
+  },
+  {
+    "fs_iters": 16,
+    "frames": 161,
+    "fs_model_ms_p50": 262.0,
+    "fs_model_ms_p95": 311.0,
+    "fs_projection_ms_p50": 363.75649995170534,
+    "lost_per_repeat": [
+      0,
+      0
+    ],
+    "pose_repeat_max_difference": 0.0,
+    "depth_difference_vs16_mm_p50_of_frame_medians": 0.0
+  }
+]

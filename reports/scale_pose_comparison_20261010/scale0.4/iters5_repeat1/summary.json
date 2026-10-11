@@ -1,0 +1,12 @@
+{
+  "iters": 5,
+  "repeat": 1,
+  "updates": 160,
+  "lost": 83,
+  "pose_ms_p50": 79.5076999347657,
+  "pose_ms_p95": 93.35152505664153,
+  "pose_only_hz": 12.260331965583228,
+  "residual_mm_p50": 67.75,
+  "residual_mm_p95": 198.50499999999994,
+  "first_lost_frame": 1230
+}

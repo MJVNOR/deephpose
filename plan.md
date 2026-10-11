@@ -51,7 +51,9 @@ Orden: 1 geometría → 2/3 profundidad-GPU → 4 FoundationPose Windows → 5 m
 ## 7. Validar → vivo `live_pose.py` — en curso
 - [x] Track por etapas `pose/track_burst.py` (5 frames con movimiento): INIT 15.9s, TRACK 0.14-0.21s, frac≈0.94, residuo ~1mm, 0 LOST. VRAM track 190MiB.
 - [x] Hallazgo: `Utils` top-level colisiona entre repos → worker FS en proceso aparte (`scripts/fs_worker.py`, protocolo líneas) + `pose/live_pose.py` orquesta (captura porteada, proyección, register/track, HUD lat/edad/fps/estado, r/s/q).
-- [ ] Smoke `live_pose --frames 3` + medición conjunta 8GB + serie viva con movimiento.
+- [x] SAM3 conjunto viable: `facebook/sam3` (0.9B, bf16, texto `"computer mouse"`) → 1 máscara, box [262,175,480,296], score 0.90 (mejor que mi bbox manual). Residentes: pose 286 + SAM 1796 MiB, pico SAM 2304; + worker FS 2104 en otro proceso ≈ 4.4 GB de 8 GB. Cabe residente.
+- [x] A/B register: sin SAM 19.1s pico 5.4GB vs SAM residente 32.9s pico 7.8GB → SAM bajo demanda (`unload_sam` tras cada máscara).
+- [ ] Integrar SAM como backend de máscara (texto; fallback bbox) + re-init desde última pose.
 
 ## 8. Config y entregables
 - [ ] `config.toml:[pose] mesh, scale, pesos, mask, iters_init/track, umbrales lost, viz_alpha`. CLI gana.

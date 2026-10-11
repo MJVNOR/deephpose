@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "--mesh",
+    "data/mesh/mouse/910-007575_MX_MASTER_4_MAC_Space_Black_prepared.obj",
+    "--scale",
+    "0.5",
+    "--mask-text",
+    "computer mouse",
+    "--bag",
+    "data/bags/live_20261010_030134.db3",
+    "--track-iters",
+    "5"
+  ],
+  "source_sha256": "283dcb383bc9222b96873426a2098f98d7a6a6ad560c518ae5d8874eb5426d6a",
+  "mode": "unchanged application with print observer; sparse JPEG I/O adds overhead; not deterministic offline playback"
+}

@@ -1,0 +1,111 @@
+{
+  "isolated": [
+    {
+      "frame": 60,
+      "reference": true,
+      "seconds": 3.9780542999505997,
+      "exact": true,
+      "hypotheses": 252
+    },
+    {
+      "frame": 60,
+      "reference": false,
+      "seconds": 3.352801000000909,
+      "exact": true,
+      "hypotheses": 252
+    },
+    {
+      "frame": 60,
+      "reference": false,
+      "seconds": 3.3974207998253405,
+      "exact": true,
+      "hypotheses": 252
+    },
+    {
+      "frame": 60,
+      "reference": true,
+      "seconds": 3.4032166998367757,
+      "exact": true,
+      "hypotheses": 252
+    },
+    {
+      "frame": 1260,
+      "reference": true,
+      "seconds": 3.4136950001120567,
+      "exact": true,
+      "hypotheses": 252
+    },
+    {
+      "frame": 1260,
+      "reference": false,
+      "seconds": 3.3279196999501437,
+      "exact": true,
+      "hypotheses": 252
+    },
+    {
+      "frame": 1260,
+      "reference": false,
+      "seconds": 3.3739867999684066,
+      "exact": true,
+      "hypotheses": 252
+    },
+    {
+      "frame": 1260,
+      "reference": true,
+      "seconds": 3.3907916999887675,
+      "exact": true,
+      "hypotheses": 252
+    },
+    {
+      "frame": 2460,
+      "reference": true,
+      "seconds": 3.435063699958846,
+      "exact": true,
+      "hypotheses": 252
+    },
+    {
+      "frame": 2460,
+      "reference": false,
+      "seconds": 3.3815280999988317,
+      "exact": true,
+      "hypotheses": 252
+    },
+    {
+      "frame": 2460,
+      "reference": false,
+      "seconds": 3.449630100047216,
+      "exact": true,
+      "hypotheses": 252
+    },
+    {
+      "frame": 2460,
+      "reference": true,
+      "seconds": 3.4095415000338107,
+      "exact": true,
+      "hypotheses": 252
+    }
+  ],
+  "concurrent_fs": [
+    {
+      "reference": true,
+      "seconds": 14.97123200003989,
+      "exact_pose": true
+    },
+    {
+      "reference": false,
+      "seconds": 7.224547800142318,
+      "exact_pose": true
+    },
+    {
+      "reference": false,
+      "seconds": 9.683409800054505,
+      "exact_pose": true
+    },
+    {
+      "reference": true,
+      "seconds": 23.604185600066558,
+      "exact_pose": true
+    }
+  ],
+  "note": "FS competition uses repeated recorded IR input, not a physical camera. Optimized runs pause further FS requests but let the in-flight one finish. Fixed SAM mask excludes SAM latency. Other masks are CAD projections, not ground truth."
+}

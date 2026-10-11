@@ -1,0 +1,181 @@
+{
+  "note": "Differences against scale .5, not absolute error. ROI is projected CAD bounding box from saved .5 poses; depth edges are >5mm adjacent finite differences, dilated 1px.",
+  "depth_frames": 161,
+  "depth_difference": {
+    "global": {
+      "p50_mm": {
+        "p50": 2.6723742485046387,
+        "p95": 3.2266974449157715,
+        "max": 3.4283995628356934
+      },
+      "p95_mm": {
+        "p50": 20.118331909179688,
+        "p95": 34.385562896728516,
+        "max": 45.09724426269531
+      }
+    },
+    "object_bbox": {
+      "p50_mm": {
+        "p50": 2.2179036140441895,
+        "p95": 3.649115562438965,
+        "max": 4.498019695281982
+      },
+      "p95_mm": {
+        "p50": 14.157408714294434,
+        "p95": 41.53293991088867,
+        "max": 75.6490249633789
+      }
+    },
+    "object_depth_edges": {
+      "p50_mm": {
+        "p50": 8.089006423950195,
+        "p95": 15.470727920532227,
+        "max": 19.655912399291992
+      },
+      "p95_mm": {
+        "p50": 72.59638977050781,
+        "p95": 431.05633544921875,
+        "max": 487.3319396972656
+      }
+    }
+  },
+  "roi_validity_disagreement": {
+    "p50": 0.08082744199940257,
+    "p95": 0.10869136925058726,
+    "max": 0.1168772497413253
+  },
+  "offline_runs": {
+    "scale0.5": [
+      {
+        "iters": 5,
+        "repeat": 1,
+        "updates": 160,
+        "lost": 0,
+        "pose_ms_p50": 77.03524990938604,
+        "pose_ms_p95": 85.99100998835637,
+        "pose_only_hz": 12.8299130972107,
+        "residual_mm_p50": 2.1,
+        "residual_mm_p95": 4.014999999999995,
+        "first_lost_frame": null
+      },
+      {
+        "iters": 5,
+        "repeat": 2,
+        "updates": 160,
+        "lost": 0,
+        "pose_ms_p50": 77.9296999098733,
+        "pose_ms_p95": 94.12270992761476,
+        "pose_only_hz": 12.539499914312895,
+        "residual_mm_p50": 2.1,
+        "residual_mm_p95": 4.014999999999995,
+        "first_lost_frame": null
+      }
+    ],
+    "scale0.4": [
+      {
+        "iters": 5,
+        "repeat": 1,
+        "updates": 160,
+        "lost": 83,
+        "pose_ms_p50": 79.5076999347657,
+        "pose_ms_p95": 93.35152505664153,
+        "pose_only_hz": 12.260331965583228,
+        "residual_mm_p50": 67.75,
+        "residual_mm_p95": 198.50499999999994,
+        "first_lost_frame": 1230
+      },
+      {
+        "iters": 5,
+        "repeat": 2,
+        "updates": 160,
+        "lost": 83,
+        "pose_ms_p50": 77.59329990949482,
+        "pose_ms_p95": 89.74372500088063,
+        "pose_only_hz": 12.745372110118856,
+        "residual_mm_p50": 67.75,
+        "residual_mm_p95": 198.50499999999994,
+        "first_lost_frame": 1230
+      }
+    ]
+  },
+  "fs_model_ms": {
+    "scale0.5": {
+      "p50": 155.0,
+      "p95": 174.0,
+      "max": 196.0
+    },
+    "scale0.4": {
+      "p50": 125.0,
+      "p95": 144.0,
+      "max": 173.0
+    }
+  },
+  "pose_difference": {
+    "angle_deg": {
+      "p50": 20.411296192032644,
+      "p95": 178.73542067134682,
+      "max": 179.76191856269637
+    },
+    "center_mm": {
+      "p50": 104.01621415969737,
+      "p95": 241.8830065645206,
+      "max": 263.6589729409074
+    }
+  },
+  "largest_pose_differences": [
+    {
+      "frame": 1980,
+      "angle_deg": 179.76191856269637,
+      "center_mm": 157.16963631081967
+    },
+    {
+      "frame": 1560,
+      "angle_deg": 179.60222553158675,
+      "center_mm": 115.96681825372129
+    },
+    {
+      "frame": 1515,
+      "angle_deg": 179.32642319462255,
+      "center_mm": 134.30722194469433
+    },
+    {
+      "frame": 2010,
+      "angle_deg": 179.2233622121467,
+      "center_mm": 149.76386458871693
+    },
+    {
+      "frame": 1950,
+      "angle_deg": 179.16946529126304,
+      "center_mm": 173.15701822893118
+    },
+    {
+      "frame": 1890,
+      "angle_deg": 179.05047424272868,
+      "center_mm": 234.26568925761575
+    },
+    {
+      "frame": 2160,
+      "angle_deg": 179.04066724082142,
+      "center_mm": 142.53245959958338
+    },
+    {
+      "frame": 2025,
+      "angle_deg": 178.98882190176897,
+      "center_mm": 150.51342794483705
+    },
+    {
+      "frame": 1575,
+      "angle_deg": 178.7220837644825,
+      "center_mm": 112.97849838642802
+    },
+    {
+      "frame": 2130,
+      "angle_deg": 178.50981129892943,
+      "center_mm": 148.40198120573652
+    }
+  ],
+  "repeat_max_abs_difference": {
+    "scale0.5": 0.0,
+    "scale0.4": 0.0
+  }
+}

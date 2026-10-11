@@ -1,5 +1,6 @@
 """Núcleo compartido infer.py/live.py: carga del modelo e inferencia de disparidad."""
 import sys
+import os
 import time
 from pathlib import Path
 
@@ -11,9 +12,19 @@ from omegaconf import OmegaConf
 sys.path.insert(0, "third_party/FoundationStereo")
 from core.foundation_stereo import FoundationStereo  # noqa: E402
 from core.utils.utils import InputPadder  # noqa: E402
+import core.foundation_stereo as fs_core
+from fs_volumes import build_gwc_volume, build_concat_volume
+
+_REFERENCE_VOLUMES = (fs_core.build_gwc_volume, fs_core.build_concat_volume)
+
+
+def configure_volumes(reference=False):
+    functions = _REFERENCE_VOLUMES if reference else (build_gwc_volume, build_concat_volume)
+    fs_core.build_gwc_volume, fs_core.build_concat_volume = functions
 
 
 def load_model(ckpt_path, valid_iters):
+    configure_volumes(reference=os.environ.get('DEEPH_FS_REFERENCE_VOLUMES') == '1')
     ckpt_path = Path(ckpt_path)
     if not ckpt_path.is_file():
         sys.exit(f"error: pesos no encontrados: {ckpt_path}")
@@ -53,8 +64,9 @@ def infer_disp(model, cfg, img0, img1, scale=1.0, valid_iters=16):
     H, W = img0.shape[:2]
     mk = lambda im: torch.as_tensor(im).cuda().float()[None].permute(0, 3, 1, 2)
     t0 = time.perf_counter()
-    padder = InputPadder(mk(img0).shape, divis_by=32, force_square=False)
-    a, b = padder.pad(mk(img0), mk(img1))
+    a, b = mk(img0), mk(img1)
+    padder = InputPadder(a.shape, divis_by=32, force_square=False)
+    a, b = padder.pad(a, b)
     torch.cuda.synchronize()
     t_h2d = time.perf_counter() - t0
     torch.cuda.reset_peak_memory_stats()
@@ -71,6 +83,7 @@ def infer_disp(model, cfg, img0, img1, scale=1.0, valid_iters=16):
     d = padder.unpad(disp.float()).data.cpu().numpy().reshape(H, W)
     t_d2h = time.perf_counter() - t2
     info = {"t_h2d_s": round(t_h2d, 3), "t_infer_s": round(t_infer, 3),
+            "reference_volumes": fs_core.build_gwc_volume is _REFERENCE_VOLUMES[0],
             "t_d2h_s": round(t_d2h, 3), "t_total_s": round(time.perf_counter() - t_all, 3),
             "vram_alloc_mib": round(torch.cuda.memory_allocated() / 2**20, 1),
             "vram_reserved_mib": round(torch.cuda.memory_reserved() / 2**20, 1),

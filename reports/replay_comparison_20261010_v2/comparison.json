@@ -1,0 +1,51 @@
+[
+  {
+    "iters": 1,
+    "updates_per_repeat": 160,
+    "repeats": 2,
+    "pose_ms_p50": 18.802950042299926,
+    "pose_ms_p95": 23.946990014519546,
+    "pose_only_hz": 51.28168474678242,
+    "lost_per_repeat": 7,
+    "lost_frames": [
+      1230,
+      1245,
+      1260,
+      1275,
+      1290,
+      1305,
+      1320
+    ],
+    "residual_mm_p50": 2.2,
+    "residual_mm_p95": 5.245000000000056,
+    "max_abs_pose_difference_between_repeats": 0.0
+  },
+  {
+    "iters": 2,
+    "updates_per_repeat": 160,
+    "repeats": 2,
+    "pose_ms_p50": 29.707400011830032,
+    "pose_ms_p95": 35.664615128189325,
+    "pose_only_hz": 32.885136656463075,
+    "lost_per_repeat": 1,
+    "lost_frames": [
+      1230
+    ],
+    "residual_mm_p50": 2.2,
+    "residual_mm_p95": 4.635000000000008,
+    "max_abs_pose_difference_between_repeats": 0.0
+  },
+  {
+    "iters": 5,
+    "updates_per_repeat": 160,
+    "repeats": 2,
+    "pose_ms_p50": 65.44069992378354,
+    "pose_ms_p95": 75.29320996254683,
+    "pose_only_hz": 15.089629664021697,
+    "lost_per_repeat": 0,
+    "lost_frames": [],
+    "residual_mm_p50": 2.2,
+    "residual_mm_p95": 4.405000000000001,
+    "max_abs_pose_difference_between_repeats": 0.0
+  }
+]

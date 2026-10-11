@@ -1,0 +1,46 @@
+[
+  {
+    "label": "reference_r1",
+    "valid_iters": 4,
+    "scale": 0.5,
+    "legacy": false,
+    "updates": 297,
+    "lost": 0,
+    "pose_hz": 3.6615485454447367,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "candidate_r1",
+    "valid_iters": 4,
+    "scale": 0.4,
+    "legacy": false,
+    "updates": 341,
+    "lost": 0,
+    "pose_hz": 4.207843712505174,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "candidate_r2",
+    "valid_iters": 4,
+    "scale": 0.4,
+    "legacy": false,
+    "updates": 342,
+    "lost": 0,
+    "pose_hz": 4.221456556194206,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "reference_r2",
+    "valid_iters": 4,
+    "scale": 0.5,
+    "legacy": false,
+    "updates": 294,
+    "lost": 0,
+    "pose_hz": 3.6320715983188787,
+    "first_frame": 61,
+    "last_frame": 2465
+  }
+]

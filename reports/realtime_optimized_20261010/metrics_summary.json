@@ -1,0 +1,137 @@
+[
+  {
+    "run": "baseline_r1",
+    "updates": 203,
+    "lost": 0,
+    "lost_percent": 0.0,
+    "pose_hz": 2.5045236004754816,
+    "measured_wall_s": 80.65406129998155,
+    "source_span_s": 80.76755444335937,
+    "first_frame": 61,
+    "last_frame": 2465,
+    "fs_iters": 16,
+    "track_iters": 5,
+    "legacy_costs": true,
+    "capture_to_publish_ms": {
+      "p50": 582.0888999151066,
+      "p95": 699.1452449350617
+    },
+    "fs_model_ms": {
+      "p50": 266.0,
+      "p95": 311.95
+    },
+    "pose_ms": {
+      "p50": 126.84619997162372,
+      "p95": 183.98476005531847
+    },
+    "residual_mm_p50": 2.2
+  },
+  {
+    "run": "baseline_r2",
+    "updates": 206,
+    "lost": 0,
+    "lost_percent": 0.0,
+    "pose_hz": 2.538493448415512,
+    "measured_wall_s": 80.75656060012989,
+    "source_span_s": 80.76755444335937,
+    "first_frame": 61,
+    "last_frame": 2465,
+    "fs_iters": 16,
+    "track_iters": 5,
+    "legacy_costs": true,
+    "capture_to_publish_ms": {
+      "p50": 582.9087998718023,
+      "p95": 645.8014000207185
+    },
+    "fs_model_ms": {
+      "p50": 263.0,
+      "p95": 290.79999999999995
+    },
+    "pose_ms": {
+      "p50": 121.84090004302561,
+      "p95": 179.1981200687586
+    },
+    "residual_mm_p50": 2.2
+  },
+  {
+    "run": "candidate_legacy",
+    "updates": 242,
+    "lost": 0,
+    "lost_percent": 0.0,
+    "pose_hz": 2.9872861177220997,
+    "measured_wall_s": 80.67523179994896,
+    "source_span_s": 80.76755444335937,
+    "first_frame": 61,
+    "last_frame": 2465,
+    "fs_iters": 8,
+    "track_iters": 5,
+    "legacy_costs": true,
+    "capture_to_publish_ms": {
+      "p50": 524.1859999950975,
+      "p95": 597.3062999546528
+    },
+    "fs_model_ms": {
+      "p50": 202.0,
+      "p95": 229.0
+    },
+    "pose_ms": {
+      "p50": 119.57530002109706,
+      "p95": 180.29170017689466
+    },
+    "residual_mm_p50": 2.2
+  },
+  {
+    "run": "optimized_r1",
+    "updates": 259,
+    "lost": 0,
+    "lost_percent": 0.0,
+    "pose_hz": 3.1873492497313944,
+    "measured_wall_s": 80.94500469998457,
+    "source_span_s": 80.76755444335937,
+    "first_frame": 61,
+    "last_frame": 2465,
+    "fs_iters": 8,
+    "track_iters": 5,
+    "legacy_costs": false,
+    "capture_to_publish_ms": {
+      "p50": 530.556199955754,
+      "p95": 578.7684049573727
+    },
+    "fs_model_ms": {
+      "p50": 224.0,
+      "p95": 244.14999999999998
+    },
+    "pose_ms": {
+      "p50": 156.59650007728487,
+      "p95": 184.83912490773943
+    },
+    "residual_mm_p50": 2.2
+  },
+  {
+    "run": "optimized_r2",
+    "updates": 255,
+    "lost": 0,
+    "lost_percent": 0.0,
+    "pose_hz": 3.13770610768081,
+    "measured_wall_s": 80.95085750008002,
+    "source_span_s": 80.76755444335937,
+    "first_frame": 61,
+    "last_frame": 2465,
+    "fs_iters": 8,
+    "track_iters": 5,
+    "legacy_costs": false,
+    "capture_to_publish_ms": {
+      "p50": 538.6100499890745,
+      "p95": 599.2610499728471
+    },
+    "fs_model_ms": {
+      "p50": 227.0,
+      "p95": 250.0
+    },
+    "pose_ms": {
+      "p50": 158.21470005903393,
+      "p95": 197.07567002624273
+    },
+    "residual_mm_p50": 2.2
+  }
+]

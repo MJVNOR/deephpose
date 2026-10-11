@@ -1,0 +1,27 @@
+{
+  "frames": 161,
+  "exact": true,
+  "fields": [
+    "depth",
+    "validity",
+    "K",
+    "RGB",
+    "u",
+    "v",
+    "zc",
+    "pts",
+    "arg"
+  ],
+  "manifest_sha256": "c391333e3cc2fbc2e12bcd934dcd6523c90f19620e3500fde3b5c21dbdcb7f04",
+  "source_sha256": "28b8279e4f6fbd97281bfb42cc1c6cbc71035b0cae6349077ec3323b6f161152",
+  "timings_ms": {
+    "sorted": {
+      "p50": 66.14420004189014,
+      "p95": 82.35509996302426
+    },
+    "reduced": {
+      "p50": 43.38709986768663,
+      "p95": 54.046800127252936
+    }
+  }
+}

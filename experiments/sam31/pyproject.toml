@@ -1,0 +1,23 @@
+[project]
+name = "deephmeasure-sam31-evaluation"
+version = "0.1.0"
+requires-python = "==3.12.*"
+dependencies = [
+  "sam3", "torch==2.7.1", "torchvision==0.22.1", "setuptools<81",
+  "opencv-python<4.12", "scipy", "einops", "pycocotools", "hydra-core",
+  "matplotlib", "triton-windows>=3.3,<3.4", "psutil", "decord", "python-dotenv",
+]
+
+[tool.uv]
+package = false
+required-environments = ["sys_platform == 'win32'"]
+
+[tool.uv.sources]
+sam3 = { path = "../../third_party/SAM31", editable = true }
+torch = { index = "pytorch-cu126" }
+torchvision = { index = "pytorch-cu126" }
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true

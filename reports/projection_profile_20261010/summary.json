@@ -1,0 +1,11 @@
+{
+  "calls": 30,
+  "frames": [
+    60,
+    1260,
+    2460
+  ],
+  "wall_ms_p50": 67.89514992851764,
+  "wall_ms_p95": 70.3551750164479,
+  "note": "CPU profile over three real inputs, FS4 scale .5; isolated, not concurrent throughput."
+}

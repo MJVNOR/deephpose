@@ -1,0 +1,44 @@
+{
+  "runs": [
+    {
+      "label": "reference1",
+      "frames": 160,
+      "lost": 0,
+      "track_ms_p50": 142.36714993603528,
+      "track_ms_p95": 166.06514517916366,
+      "max_reserved_mib": 188.0
+    },
+    {
+      "label": "candidate1",
+      "frames": 160,
+      "lost": 0,
+      "track_ms_p50": 116.90134997479618,
+      "track_ms_p95": 139.25043010385707,
+      "max_reserved_mib": 212.0
+    },
+    {
+      "label": "candidate2",
+      "frames": 160,
+      "lost": 0,
+      "track_ms_p50": 86.08885004650801,
+      "track_ms_p95": 124.07361491350457,
+      "max_reserved_mib": 212.0
+    },
+    {
+      "label": "reference2",
+      "frames": 160,
+      "lost": 0,
+      "track_ms_p50": 76.2165499618277,
+      "track_ms_p95": 127.27853010874242,
+      "max_reserved_mib": 188.0
+    }
+  ],
+  "max_pose_element_difference": {
+    "reference1": 0.0,
+    "candidate1": 0.0,
+    "candidate2": 0.0,
+    "reference2": 0.0
+  },
+  "iterations": 5,
+  "note": "Same 160 tracking frames and initial state; independent sequences, not teacher forcing."
+}

@@ -14,9 +14,39 @@ from pathlib import Path
 import cv2
 import numpy as np
 import torch
+import contextlib
 
 sys.path.insert(0, "scripts")
-from fs_model import infer_disp, load_model  # noqa: E402
+with contextlib.redirect_stdout(sys.stderr):
+    from fs_model import infer_disp, load_model  # noqa: E402
+
+
+def binary_main():
+    from fs_transport import read_packet, write_packet
+    output = sys.stdout.buffer
+    model = cfg = None
+    while True:
+        try:
+            request,payload = read_packet(sys.stdin.buffer)
+        except EOFError:
+            return
+        if request.get('command') == 'quit':
+            return
+        try:
+            shape = tuple(request['shape'])
+            count = int(np.prod(shape))
+            if request.get('command') != 'infer' or len(shape)!=2 or count<=0 or len(payload)!=2*count:
+                raise ValueError('Invalid stereo request')
+            left = np.frombuffer(payload[:count],np.uint8).reshape(shape).copy()
+            right = np.frombuffer(payload[count:],np.uint8).reshape(shape).copy()
+            with contextlib.redirect_stdout(sys.stderr):
+                if model is None:
+                    from config import load
+                    model,cfg,_ = load_model(load()['model']['ckpt'],int(request['iters']))
+                d,info = infer_disp(model,cfg,left,right,float(request['scale']),int(request['iters']))
+            write_packet(output,{'id':request['id'],'shape':list(d.shape),'info':info},d.astype('<f4').tobytes())
+        except Exception as exc:
+            write_packet(output,{'id':request.get('id'),'error':f'{type(exc).__name__}: {exc}'})
 
 
 def main():
@@ -35,13 +65,15 @@ def main():
             if model is None:
                 from config import load
                 C = load()
-                model, cfg, _ = load_model(C["model"]["ckpt"], int(siters))
+                with contextlib.redirect_stdout(sys.stderr):
+                    model, cfg, _ = load_model(C["model"]["ckpt"], int(siters))
             l = cv2.imread(sl, cv2.IMREAD_UNCHANGED)
             r = cv2.imread(sr, cv2.IMREAD_UNCHANGED)
             if l is None or r is None:
                 print("err no se leen pares IR", flush=True)
                 continue
-            d, info = infer_disp(model, cfg, l, r, float(sscale), int(siters))
+            with contextlib.redirect_stdout(sys.stderr):
+                d, info = infer_disp(model, cfg, l, r, float(sscale), int(siters))
             np.save(sout, d)
             print(f"ok {sout} {info['t_infer_s']}", flush=True)
         except torch.cuda.OutOfMemoryError as e:
@@ -51,4 +83,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    binary_main() if '--binary' in sys.argv else main()

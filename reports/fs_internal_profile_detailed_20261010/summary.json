@@ -1,0 +1,75 @@
+{
+  "note": "Five warmed inferences per scale; CUDA-event intervals for immediate-child modules and selected top-level functional work. Repeated calls accumulate per inference. Operator profiler is a separate call, not an FPS measurement.",
+  "supported_profiler_activities": [
+    "ProfilerActivity.CPU"
+  ],
+  "cuda_kernel_trace_available": false,
+  "scales": {
+    "0.5": {
+      "input_hw": [
+        240,
+        320
+      ],
+      "padded_hw": [
+        256,
+        320
+      ],
+      "model_ms_p50": 153.0,
+      "modules_ms_p50": {
+        "normalize_image": 0.5874879956245422,
+        "feature": 28.56038475036621,
+        "stem_2": 0.40140798687934875,
+        "build_gwc_volume": 19.809280395507812,
+        "proj_cmb": 0.28704000264406204,
+        "build_concat_volume": 5.541791915893555,
+        "corr_stem": 10.980352401733398,
+        "corr_feature_att": 0.3235839903354645,
+        "cost_agg": 19.06380844116211,
+        "classifier": 26.263551712036133,
+        "disparity_regression": 0.01740800030529499,
+        "cnet": 4.753407955169678,
+        "cam": 0.3962880000472069,
+        "sam": 0.17817599698901176,
+        "geo_volume__init__": 1.1847679615020752,
+        "geo_volume__call__": 6.62937593460083,
+        "update_block": 22.9136323928833,
+        "spx_2_gru": 0.17203199863433838,
+        "spx_gru": 0.1525759994983673,
+        "context_upsample": 0.030719999223947525
+      }
+    },
+    "0.4": {
+      "input_hw": [
+        192,
+        256
+      ],
+      "padded_hw": [
+        192,
+        256
+      ],
+      "model_ms_p50": 124.0,
+      "modules_ms_p50": {
+        "normalize_image": 0.5796479880809784,
+        "feature": 30.42304039001465,
+        "stem_2": 0.3676159977912903,
+        "build_gwc_volume": 18.331647872924805,
+        "proj_cmb": 0.27884799987077713,
+        "build_concat_volume": 5.6136322021484375,
+        "corr_stem": 5.6156158447265625,
+        "corr_feature_att": 0.1443839967250824,
+        "cost_agg": 12.105728149414062,
+        "classifier": 15.434752464294434,
+        "disparity_regression": 0.01740800030529499,
+        "cnet": 3.9004158973693848,
+        "cam": 0.30719999969005585,
+        "sam": 0.16588800214231014,
+        "geo_volume__init__": 0.7024639844894409,
+        "geo_volume__call__": 7.696415901184082,
+        "update_block": 19.649503707885742,
+        "spx_2_gru": 0.40854400396347046,
+        "spx_gru": 0.19148799777030945,
+        "context_upsample": 0.1589439958333969
+      }
+    }
+  }
+}

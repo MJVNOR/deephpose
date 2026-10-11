@@ -1,0 +1,28 @@
+{
+  "baseline": {
+    "runs": 2,
+    "updates": 409,
+    "lost": 0,
+    "pose_hz": 2.521519310246329,
+    "latency_ms_p50": 582.9087998718023,
+    "latency_ms_p95": 678.9744799025357
+  },
+  "optimized": {
+    "runs": 2,
+    "updates": 514,
+    "lost": 0,
+    "pose_hz": 3.16252678136573,
+    "latency_ms_p50": 534.0821000281721,
+    "latency_ms_p95": 591.0144000430591
+  },
+  "candidate_legacy": {
+    "runs": 1,
+    "updates": 242,
+    "lost": 0,
+    "pose_hz": 2.9872861177220997,
+    "latency_ms_p50": 524.1859999950975,
+    "latency_ms_p95": 597.3062999546528
+  },
+  "gain_percent": 25.421477777887034,
+  "gain_vs_fs8_legacy_percent": 5.866216249056744
+}

@@ -1,0 +1,18 @@
+{
+  "iterations": 5,
+  "calls": 10,
+  "total_ms_p50": 100.76614993158728,
+  "stages_ms_p50": {
+    "erode_depth": 1.562015950679779,
+    "bilateral_filter_depth": 0.1979999989271164,
+    "depth2xyzmap_batch": 0.5887520015239716,
+    "compute_crop_window_tf_batch": 4.742128014564514,
+    "nvdiffrast_render": 16.491552114486694,
+    "warp_perspective": 16.37275207042694,
+    "transform_batch": 4.7895039319992065,
+    "make_crop_data_batch": 58.878000259399414,
+    "network_forward": 27.65124797821045,
+    "empty_cache": 0.841264009475708
+  },
+  "note": "CUDA-event elapsed intervals include stream gaps; nested stages overlap. Isolated, not concurrent throughput."
+}

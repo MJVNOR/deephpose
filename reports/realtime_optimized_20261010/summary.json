@@ -1,0 +1,52 @@
+[
+  {
+    "label": "baseline_r1",
+    "valid_iters": 16,
+    "legacy": true,
+    "updates": 203,
+    "lost": 0,
+    "pose_hz": 2.5045236004754816,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "optimized_r1",
+    "valid_iters": 8,
+    "legacy": false,
+    "updates": 259,
+    "lost": 0,
+    "pose_hz": 3.1873492497313944,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "optimized_r2",
+    "valid_iters": 8,
+    "legacy": false,
+    "updates": 255,
+    "lost": 0,
+    "pose_hz": 3.13770610768081,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "baseline_r2",
+    "valid_iters": 16,
+    "legacy": true,
+    "updates": 206,
+    "lost": 0,
+    "pose_hz": 2.538493448415512,
+    "first_frame": 61,
+    "last_frame": 2465
+  },
+  {
+    "label": "candidate_legacy",
+    "valid_iters": 8,
+    "legacy": true,
+    "updates": 242,
+    "lost": 0,
+    "pose_hz": 2.9872861177220997,
+    "first_frame": 61,
+    "last_frame": 2465
+  }
+]
